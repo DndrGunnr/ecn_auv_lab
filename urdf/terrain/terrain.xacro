@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<robot name="terrain" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <material name="water">
+    <color rgba="0.02 0.26 0.46 0.6"/>
+  </material>
+
+
+<xacro:macro name="inertia" params="mass">
+     <inertial>
+      <mass value="${mass}"/>
+      <inertia  izz="${mass}" ixy="0.0"  ixz="0.0"
+                iyy="${mass}" iyz="0.0"
+                ixx="${mass}" />
+    </inertial>
+</xacro:macro>
+
+  <link name="world"/>
+
+  <link name="terrain">
+    <static>true</static>
+    <visual>
+    <geometry>
+        <mesh filename="file://$(find ecn_auv_lab)/urdf/terrain/MangaliaTerrain.dae"  scale="1.0 1.0 5.0"/>
+      </geometry>
+    </visual>
+      <collision>
+    <geometry>
+        <mesh filename="file://$(find ecn_auv_lab)/urdf/terrain/MangaliaTerrain.dae"  scale="1.0 1.0 5.0"/>
+      </geometry>
+    </collision>
+    <xacro:inertia mass="0.5"/>
+  </link>
+
+    <joint name="terrain_jnt" type="fixed">
+    <parent link="world"/>
+    <child link="terrain"/>
+    <origin xyz="0 0 -35"/>
+  </joint>
+
+  <link name="surface">
+    <static>true</static>
+    <visual>
+    <geometry>
+      <box size="2000 2000 0.1"/>
+      </geometry>
+      <material name="water"/>
+    </visual>
+     <xacro:inertia mass="0.5"/>
+  </link>
+
+  <joint name="surface_jnt" type="fixed">
+    <parent link="world"/>
+    <child link="surface"/>
+  </joint>
+
+
+</robot>
