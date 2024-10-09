@@ -1,0 +1,16 @@
+# range of measurement error
+
+# X Y Z from USBL [m]
+usbl: 1.
+
+# Z from depth [m]
+depth: 0.3
+
+# roll pitch yaw from IMU [deg]
+rpy: 2
+
+# Angular velocity from IMU [deg/s]
+w: 0.035
+
+# Linear acceleration from IMU [m/s^2]
+a: 0.0981

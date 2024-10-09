@@ -1,6 +1,6 @@
 /bluerov2/cascaded_pid:
   ros__parameters:
-    align_thr: 1.5
+    align_thr: 0.
     control_frame: bluerov2/base_link
     control_period_ms: 100
     pitch:
@@ -50,8 +50,8 @@
     use_sim_time: true
     x:
       Kd: 0.0
-      Ki: 1.0
-      Kp: 75.
+      Ki: 0.5
+      Kp: 100.
       Kv: 1.0
       u_sat: 113.13708499054457
       use_position: true
@@ -59,23 +59,23 @@
     y:
       Kd: 0.0
       Ki: 1.0
-      Kp: 75.
+      Kp: 100.
       Kv: 1.0
       u_sat: 113.13708498955891
       use_position: true
       v_sat: .inf
     yaw:
       Kd: 0.0
-      Ki: 2.0
-      Kp: 75.
+      Ki: 0.5
+      Kp: 25.
       Kv: 1.0
       u_sat: 27.322606025077864
       use_position: true
       v_sat: .inf
     z:
       Kd: 0.0
-      Ki: 7.0
-      Kp: 75.
+      Ki: 1.0
+      Kp: 50.
       Kv: 1.0
       u_sat: 80.00000000000001
       use_position: true

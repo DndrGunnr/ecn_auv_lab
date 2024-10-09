@@ -3,9 +3,6 @@ from simple_launch import SimpleLauncher, GazeboBridge
 sl = SimpleLauncher(use_sim_time = True)
 sl.declare_arg('gt', True, description = 'Whether to use ground truth localization')
 
-# initial pose
-sl.declare_gazebo_axes(x=-120., y=0., yaw=0.)
-
 
 def launch_setup():
     
@@ -16,9 +13,13 @@ def launch_setup():
                launch_arguments={'namespace': ns, 'use_sim_time': sl.sim_time})
                
     with sl.group(ns=ns):
+
+        # display thrusters in RViz
+        sl.node('thruster_manager', 'publish_wrenches',
+                parameters = {'control_frame': f'{ns}/base_link'})
                     
         # URDF spawner to Gazebo, defaults to relative robot_description topic
-        sl.spawn_gz_model(ns, spawn_args = sl.gazebo_axes_args())
+        sl.spawn_gz_model(ns, spawn_args = '-x -160. -y 0. -Y 0.'.split())
             
         # ROS-Gz bridges
         bridges = []
@@ -29,10 +30,6 @@ def launch_setup():
         bridges.append(GazeboBridge(f'/model/{ns}/pose',
                                      'pose_gt', 'geometry_msgs/Pose', GazeboBridge.gz2ros))
         
-        # odometry
-        bridges.append(GazeboBridge(f'/model/{ns}/odometry',
-                                     'odom', 'nav_msgs/Odometry', GazeboBridge.gz2ros))
-
         # imu
         for imu in ('mpu', 'lsm'):
             bridges.append(GazeboBridge(f'{ns}/{imu}',
@@ -43,22 +40,21 @@ def launch_setup():
             thruster = f'thruster{thr}'
             gz_thr_topic = f'/{ns}/{thruster}/cmd'
             bridges.append(GazeboBridge(gz_thr_topic, f'cmd_{thruster}', 'std_msgs/Float64', GazeboBridge.ros2gz))
-        
-        sl.create_gz_bridge(bridges)
                         
         # ground truth to tf if requested
         if sl.arg('gt'):
+            # odometry from Gz
+            bridges.append(GazeboBridge(f'/model/{ns}/odometry_with_covariance',
+                                     'odom', 'nav_msgs/Odometry', GazeboBridge.gz2ros, 'gz.msgs.OdometryWithCovariance'))
+
             sl.node('pose_to_tf',parameters={'child_frame': ns + '/base_link'})
         else:
             # otherwise publish ground truth as another link to get, well, ground truth
             sl.node('pose_to_tf',parameters={'child_frame': ns+'/base_link_gt'})
+            # run sensor bridge
+            sl.node('ecn_auv_lab', 'gz2ekf')
 
-            # and run EKF
-            sl.node('ecn_auv_lab', 'gz2ekf', parameters = sl.arg_map('use_pose'))
-
-            sl.node('robot_localization', 'ekf_node', name = 'ekf',
-                parameters = [sl.find('ecn_auv_lab', 'ekf.yaml')],
-                remappings = {'odometry/filtered': 'odom'})
+        sl.create_gz_bridge(bridges)
     
     return sl.launch_description()
 
