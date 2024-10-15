@@ -1,6 +1,7 @@
 /bluerov2/cascaded_pid:
   ros__parameters:
     align_thr: 0.
+    use_hydro: true
     control_frame: bluerov2/base_link
     control_period_ms: 100
     pitch:
@@ -51,7 +52,7 @@
     x:
       Kd: 0.0
       Ki: 0.5
-      Kp: 100.
+      Kp: 150.
       Kv: 1.0
       u_sat: 113.13708499054457
       use_position: true
@@ -59,7 +60,7 @@
     y:
       Kd: 0.0
       Ki: 1.0
-      Kp: 100.
+      Kp: 150.
       Kv: 1.0
       u_sat: 113.13708498955891
       use_position: true
