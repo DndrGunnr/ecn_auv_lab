@@ -9,8 +9,7 @@ def launch_setup():
     ns = 'bluerov2'
     
     # robot state publisher
-    sl.include('bluerov2_description', 'state_publisher_launch.py',
-               launch_arguments={'namespace': ns, 'use_sim_time': sl.sim_time})
+    sl.robot_state_publisher('ecn_auv_lab', 'bluerov2.urdf')
                
     with sl.group(ns=ns):
 
