@@ -8,8 +8,6 @@ def launch_setup():
     
     ns = 'bluerov2'
     
-
-               
     with sl.group(ns=ns):
 
         # robot state publisher
@@ -46,7 +44,7 @@ def launch_setup():
         if sl.arg('gt'):
             # odometry from Gz
             bridges.append(GazeboBridge(f'/model/{ns}/odometry_with_covariance',
-                                     'odom', 'nav_msgs/Odometry', GazeboBridge.gz2ros, 'gz.msgs.OdometryWithCovariance'))
+                                     'odom', 'nav_msgs/Odometry', GazeboBridge.gz2ros, 'gz.msgs.Odometry'))
 
             sl.node('pose_to_tf',parameters={'child_frame': ns + '/base_link'})
         else:
