@@ -6,7 +6,7 @@
   </material>
 
 
-<xacro:macro name="inertia" params="mass">
+<xacro:macro name="inertial" params="mass">
      <inertial>
       <mass value="${mass}"/>
       <inertia  izz="${mass}" ixy="0.0"  ixz="0.0"
@@ -29,7 +29,7 @@
         <mesh filename="file://$(find ecn_auv_lab)/urdf/terrain/MangaliaTerrain.dae"  scale="1.0 1.0 5.0"/>
       </geometry>
     </collision>
-    <xacro:inertia mass="0.5"/>
+    <xacro:inertial mass="0.5"/>
   </link>
 
     <joint name="terrain_jnt" type="fixed">
@@ -46,7 +46,7 @@
       </geometry>
       <material name="water"/>
     </visual>
-     <xacro:inertia mass="0.5"/>
+     <xacro:inertial mass="0.5"/>
   </link>
 
   <joint name="surface_jnt" type="fixed">
