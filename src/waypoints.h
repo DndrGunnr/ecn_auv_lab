@@ -1,4 +1,5 @@
 #include <filesystem>
+#include <math.h>
 #include <yaml-cpp/yaml.h>
 #include <geometry_msgs/msg/pose_stamped.hpp>
 
