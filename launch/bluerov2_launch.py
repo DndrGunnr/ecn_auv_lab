@@ -8,10 +8,12 @@ def launch_setup():
     
     ns = 'bluerov2'
     
-    # robot state publisher
-    sl.robot_state_publisher('ecn_auv_lab', 'bluerov2.urdf')
+
                
     with sl.group(ns=ns):
+
+        # robot state publisher
+        sl.robot_state_publisher('ecn_auv_lab', 'bluerov2.urdf')
 
         # display thrusters in RViz
         sl.node('thruster_manager', 'publish_wrenches',
