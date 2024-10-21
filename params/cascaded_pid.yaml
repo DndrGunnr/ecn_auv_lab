@@ -36,7 +36,7 @@
       v_sat: .inf
     saturate_thrust: false
     tam:
-      deadzone: 1.0
+      deadzone: 0.
       max_thrust: 40.
       min_thrust: -40.
       thruster_prefix: ''
