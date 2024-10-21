@@ -1,7 +1,7 @@
 /bluerov2/cascaded_pid:
   ros__parameters:
     align_thr: 0.
-    use_hydro: true
+    use_hydro: false
     control_frame: bluerov2/base_link
     control_period_ms: 100
     pitch:
@@ -36,7 +36,7 @@
       v_sat: .inf
     saturate_thrust: false
     tam:
-      deadzone: 1.
+      deadzone: 0.
       max_thrust: 40.
       min_thrust: -40.
       thruster_prefix: ''
